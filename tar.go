@@ -300,6 +300,11 @@ func (t *Tar) writeWalk(source, topLevelFolder, destination string) error {
 			return handleErr(fmt.Errorf("no file info"))
 		}
 
+		// do not add the source folder itself in the archive
+		if source == fpath {
+			return nil
+		}
+
 		// make sure we do not copy our output file into itself
 		fpathAbs, err := filepath.Abs(fpath)
 		if err != nil {
